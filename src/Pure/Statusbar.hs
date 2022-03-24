@@ -1,4 +1,4 @@
-{-# language RankNTypes, LambdaCase, ScopedTypeVariables, DataKinds, TypeApplications, BlockArguments, KindSignatures, NamedFieldPuns, AllowAmbiguousTypes, OverloadedStrings, PostfixOperators #-}
+{-# language RankNTypes, LambdaCase, ScopedTypeVariables, DataKinds, TypeApplications, BlockArguments, KindSignatures, NamedFieldPuns, AllowAmbiguousTypes, OverloadedStrings, PostfixOperators, FlexibleContexts #-}
 module Pure.Statusbar (Statusbar(..),statusbar,good,bad,neutral,Status(..),Position(..),Simple) where
 
 import Pure.Elm hiding (initial)
@@ -42,9 +42,9 @@ update = \case
   Startup     -> startup
   SetStatus s -> setStatus s
 
-startup :: Update ty
+startup :: forall ty. Update ty
 startup _ mdl = do
-  subscribe
+  subscribe @(Msg ty)
   pure mdl
 
 setStatus :: Status -> Update ty
